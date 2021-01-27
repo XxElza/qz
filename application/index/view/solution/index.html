@@ -1,0 +1,86 @@
+{extend name="public:template" /}
+
+{block name="content"}
+    <!-- INNER BANNER START -->
+    <div class="inner-banner-holder d-none d-lg-block">
+        <div class="image" style="background-image:url('__UPLOAD__/{$banner.path}');">
+            <div class="describe content-holder">
+                <div class="head">解决方案</div>
+                <div class="desc">{$banner.content|raw}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="inner-banner-holder d-lg-none d-md-block">
+        <div class="image">
+            <img src="__UPLOAD__/{$wap_banner.path}" alt="" class="img-fluid">
+        </div>
+    </div>
+    <!-- INNER BANNER END -->
+
+
+    <!-- SOLUTION START -->
+    <div class="d-none d-lg-block">
+        {volist name="solutions" id="vo"}
+        <div class="solution-holder row no-gutters content-holder">
+            <div class="col-3 custom-head">
+                <div class="title">{$key == 1 ? '政务系统' : '企业'}</div>
+                {volist name="vo" id="item" key="key1"}
+                <div class="subtitle {$key1 == 1 ? 'active' : ''}" data-id="{$item.id}">{$item.title}</div>
+                {/volist}
+            </div>
+            <div class="custom-body col-8 offset-1">
+                {volist name="vo" id="item" key="key2"}
+                <div class="{$key2 != 1 ? 'd-none' : ''}" id="solution-sm-{$item.id}">
+                    <img src="__UPLOAD__/{$item.path}" alt="{$item.title}" class="img-fluid">
+                </div>
+                {/volist}
+            </div>
+        </div>
+        {/volist}
+    </div>
+
+    <div class="d-lg-none d-md-block">
+        {volist name="wap_solutions" id="vo"}
+        <div class="solution-holder row no-gutters content-holder d-lg-none d-md-block">
+            <div class="holder-head">
+                <div class="title">{$key == 4 ? '政务系统' : '企业'}</div>
+                <div class="subtitle">{$key == 4 ? 'Government Affairs System' : 'Enterprise'}</div>
+            </div>
+            <div class="col-12 custom-head swiper-subtitle">
+                <div class="swiper-wrapper">
+                    {volist name="vo" id="item" key="key1"}
+                    <div class="subtitle swiper-slide {$key1 == 1 ? 'active' : ''}" data-id="{$item.id}">{$item.title}</div>
+                    {/volist}
+                </div>
+            </div>
+            <div class="custom-body col-12">
+                {volist name="vo" id="item" key="key2"}
+                <div class="{$key2 != 1 ? 'd-none' : ''}" id="solution-sm-{$item.id}">
+                    <img src="__UPLOAD__/{$item.path}" alt="{$item.title}" class="img-fluid">
+                </div>
+                {/volist}
+            </div>
+        </div>
+        {/volist}
+    </div>
+    <!-- SOLUTION END -->
+{/block}
+
+
+{block name="script"}
+<script>
+$('.solution-holder .subtitle').click(function () {
+    var el = $(this).attr('data-id');
+    $(this).addClass('active').siblings().removeClass('active');
+    $('#solution-' + el).removeClass('d-none').siblings().addClass('d-none');
+    $('#solution-sm-' + el).removeClass('d-none').siblings().addClass('d-none');
+    animateCSS('#solution-' + el, 'fadeInUp', 0.6);
+    animateCSS('#solution-sm-' + el, 'fadeInUp', 0.6);
+})
+
+var swiper = new Swiper('.swiper-subtitle', {
+    slidesPerView: 'auto',
+});
+</script>
+{/block}

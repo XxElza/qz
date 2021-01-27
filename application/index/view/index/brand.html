@@ -1,0 +1,124 @@
+{extend name="public:template" /}
+
+{block name="content"}
+<div class="brand_class"  style="display: flex;">
+    <!-- 品牌页头部按钮列表 -->
+    <div class="brand_top_view">
+        <div class="title brand_top_btn allBtn">ALL BRAND</div>
+        {foreach $brand as $v}
+        <div class="title brand_top_btn" data-id="{$v.id}">{$v.en_name}</div>
+        {/foreach}
+    </div>
+
+    <!-- All Brand -->
+    <div class="all_brand_class">
+        <div class="all_brand_class_bg">
+            <div class="tooltip all_brand_class_bg_image_view" style="background: url('__UPLOAD__/{$brand.0.cover}') no-repeat center center / 100% auto">
+                <div style="display: flex;flex-direction: row;">
+                    {foreach $brand.0.series as $v}
+                    <div class="tooltip all_brand_image_item_1 all_brand_image_1" style="background: url('__UPLOAD__/{$v.cover}') no-repeat center center / 100% auto;width:20%;height: 80px;"></div>
+                    {/foreach}
+
+                </div>
+            </div>
+            <div class="all_brand_content_view">
+            <div class="all_brand_content_view_logo" style="background: url('__UPLOAD__/{$brand.0.logo}') no-repeat center center / 50% 50%;"></div>
+                <div class="all_brand_content_test_view">
+                    <div class="title all_brand_content_test">
+                        {$brand.0.en_desc|strip_tags}
+                    </div>
+                    <div class="background all_brand_button" data-id="{$brand.0.id}">MORE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="all_brand_class">
+        <div class="all_brand_class_bg">
+            <div class="all_brand__bottom_content_view">
+                <div class="all_brand_bottom_content_view_logo" style="background: url('__UPLOAD__/{$brand.1.logo}') no-repeat center center / 50% 25%;"></div>
+                <div class="all_brand_content_test_view">
+                    <div class="title all_brand_content_test">
+                        {$brand.1.en_desc|strip_tags}
+                    </div>
+                    <div class="background all_brand_bottom_button" data-id="{$brand.1.id}">MORE</div>
+                </div>
+            </div>
+            <div class="tooltip all_brand_class_bg_bottom_image_view" style="background: url('__UPLOAD__/{$brand.1.cover}') no-repeat center center / 100% auto">
+                <div style="display: flex;flex-direction: row;">
+                    {foreach $brand.1.series as $v}
+                    <div class="tooltip all_brand_image_bottom_item_1 all_brand_bottom_image_1" style="background: url('__UPLOAD__/{$v.cover}') no-repeat center center / 100% auto;width:20%;height: 80px;"></div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+
+        <div class="all_brand_class_bg">
+            <div class="all_brand__bottom_3_content_view">
+                <div class="tooltip all_brand_image_bottom_3_item_1" style=" background: url('__UPLOAD__/{$brand.2.cover}') no-repeat center center / 100% auto;">
+                    <div class="background all_brand_image_bottom_3_item_left_title">MORE</div>
+                    <div class="all_brand_image_bottom_3_item_left_image" style="background: url('__UPLOAD__/{$brand.2.logo}') no-repeat center center / 100% 100%;"></div>
+                </div>
+                <div class="tooltip all_brand_image_bottom_3_item_2" style=" background: url('__UPLOAD__/{$brand.3.cover}') no-repeat center center / 100% auto;">
+                    <div class="all_brand_image_bottom_3_item_center_image" style="background: url('__UPLOAD__/{$brand.3.logo}') no-repeat center center / 100% 100%;"></div>
+                    <div class="background all_brand_image_bottom_3_item_center_title">MORE</div>
+                </div>
+                <div class="tooltip all_brand_image_bottom_3_item_3" style=" background: url('__UPLOAD__/{$brand.4.cover}') no-repeat center center / 100% auto;">
+                    <div class="all_brand_image_bottom_3_item_right_image" style="background: url('__UPLOAD__/{$brand.4.logo}') no-repeat center center / 100% 100%;"></div>
+                    <div class="background all_brand_image_bottom_3_item_right_title">MORE</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="all_brand_class_bg">
+            <div class="all_brand_fine_base_image_view">
+                <div class="all_brand_fine_base_image"></div>
+            </div>
+            <div class="all_brand_fine_base">
+                <div class="all_brand_fine_base_content_view">
+                    <div class="all_brand_fine_base_content_view_image"></div>
+                    <div class="title all_brand_fine_base_content_title">FINE BASE</div>
+                    <div class="title all_brand_fine_base_test">
+                        This is Double Phoenix brand asasa discription. This is fake text.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 系列循环 -->
+    {foreach $brand as $v}
+    <div class="double_phoenix_class">
+        <div class="double_phoenix_top_view">
+            <div class="double_phoenix_top_view_left"></div>
+            <div class="double_phoenix_top_view_right">
+                <!--<video class="brand_video" controls src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" poster="images/video_cover.jpg"></video>-->
+                <div class="brand_title">{$v.en_desc}</div>
+            </div>
+        </div>
+
+
+        <div class="phoenix_image_list">
+            <div class="image_line">
+                {foreach $v.series as $vv}
+                <div class="tooltip image_line_1 mosaicBtn" data-id="{$vv.id}" style="background: url('__UPLOAD__/{$vv.cover}') no-repeat center center / 100% auto;"></div>
+                {/foreach}
+            </div>
+        </div>
+
+
+    </div>
+    {/foreach}
+
+
+    <!-- 品牌页底部按钮列表 -->
+    <div class="brand_top_view">
+        <div class="title brand_top_btn homeBtn">HOME</div>
+        <div class="title brand_top_btn brandBtn" style="color: rgb(34, 126, 36);">BRAND</div>
+        <div class="title brand_top_btn newsBtn">NEWS</div>
+        <div class="title brand_top_btn aboutBtn">ABOUT</div>
+    </div>
+</div>
+
+{/block}

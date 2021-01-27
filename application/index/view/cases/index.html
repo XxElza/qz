@@ -1,0 +1,65 @@
+{extend name="public:template" /}
+
+{block name="content"}
+    <!-- INNER BANNER START -->
+    <div class="inner-banner-holder d-none d-lg-block">
+        <div class="image" style="background-image:url('__UPLOAD__/{$banner.path}');">
+            <div class="describe content-holder">
+                <div class="head">成功案例</div>
+                <div class="desc">{$banner.content|raw}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="inner-banner-holder d-lg-none d-md-block">
+        <div class="image">
+            <img src="__UPLOAD__/{$wap_banner.path}" alt="" class="img-fluid">
+        </div>
+    </div>
+    <!-- INNER BANNER END -->
+
+
+    <!-- CASE START -->
+    <div class="case-holder content-holder container d-none d-lg-block">
+        <div class="holder-body row no-gutters text-left justify-content-center">
+            <div class="col-11" >
+                <img src="__UPLOAD__/{$website_config[5]}" alt="成功案例" class="img-fluid">
+            </div>
+
+            <div class="col-12 row no-gutters case-content">
+                {volist name="cases" id="vo"}
+                <div class="case-item">
+                    <div class="image">
+                        <img src="__UPLOAD__/{$vo.path}" alt="{$vo.title}" class="img-fluid">
+                    </div>
+
+                    <div class="head">{$vo.title}</div>
+                    <div class="content">{$vo.desc|raw}</div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+
+    <div class="case-holder content-holder container d-lg-none d-md-block">
+        <div class="holder-body row no-gutters text-left justify-content-center">
+            <div class="col-12" >
+                <img src="__UPLOAD__/{$website_config[11]}" alt="成功案例" class="img-fluid">
+            </div>
+
+            <div class="col-12 row no-gutters case-content">
+                {volist name="cases" id="vo"}
+                <div class="col-5 mr-auto ml-auto case-item">
+                    <div class="image">
+                        <img src="__UPLOAD__/{$vo.path}" alt="{$vo.title}" class="img-fluid">
+                    </div>
+
+                    <div class="head">{$vo.title}</div>
+                    <div class="content">{$vo.desc|raw}</div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    <!-- CASE END -->
+{/block}

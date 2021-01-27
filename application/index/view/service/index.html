@@ -1,0 +1,56 @@
+{extend name="public:template" /}
+
+{block name="content"}
+    <!-- INNER BANNER START -->
+    <div class="inner-banner-holder d-none d-lg-block">
+        <div class="image" style="background-image:url('__UPLOAD__/{$banner.path}');">
+            <div class="describe content-holder">
+                <div class="head">服务与支持</div>
+                <div class="desc">{$banner.content|raw}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="inner-banner-holder d-lg-none d-md-block">
+        <div class="image">
+            <img src="__UPLOAD__/{$wap_banner.path}" alt="" class="img-fluid">
+        </div>
+    </div>
+    <!-- INNER BANNER END -->
+
+
+    <!-- SOLUTION START -->
+    <div class="service-holder content-holder d-none d-lg-block">
+        <div class="holder-body row no-gutters text-center justify-content-center">
+            <div class="col-12" >
+                <img src="__UPLOAD__/{$website_config[6]}" alt="服务与支持" class="img-fluid">
+            </div>
+
+            <div class="col-10 describe">
+                <span>业务涵盖了浙江、内蒙、河南、山东、山西、广东、江苏、陕西、青海、江西、四川、安徽、湖北等10多个省，支持各省市区政务数据治理能力现代化。</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="service-holder content-holder d-lg-none d-md-block">
+        <div class="holder-body row no-gutters text-center justify-content-center">
+            <div class="col-10 describe">
+                <span>业务涵盖了浙江、内蒙、河南、山东、山西、广东、江苏、陕西、青海、江西、四川、安徽、湖北等10多个省，支持各省市区政务数据治理能力现代化。</span>
+            </div>
+
+            <div class="col-12" >
+                <img src="__UPLOAD__/{$website_config[12]}" alt="服务与支持" class="img-fluid">
+            </div>
+
+            <div class="col-12 service-content text-left">
+                {volist name="services" id="vo"}
+                <div class="service-item">
+                    <div class="head">{$vo.title}</div>
+                    <div class="desc">{$vo.desc|raw}</div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    <!-- SOLUTION END -->
+{/block}

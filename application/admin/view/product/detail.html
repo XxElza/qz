@@ -1,0 +1,116 @@
+{extend name="public:template" /}
+
+{block name="content"}
+<div class="section-header">
+    <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="{:url('Index/index')}">控制台</a></div>
+        <div class="breadcrumb-item"><a href="{:url('series/index')}">系列管理</a></div>
+        <div class="breadcrumb-item">{$title}</div>
+    </div>
+</div>
+
+<div class="section-body">
+    <h2 class="section-title">系列管理 - {$title}</h2>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <form id="data-form" autocomplete=off class="needs-validation" novalidate="">
+                    <input type="hidden" name="id" value="{$data.id}">
+                    <div class="card-body">
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">系列</label>
+                            <div class="col-sm-12 col-md-7">
+                                <select class="form-control selectric" name="series_id">
+                                    <option value="{$data.series_id ?? 0}">{$data.series_name ?? "请选择"}</option>
+                                    {volist name="series" id="vo" key="key"}
+                                    <option value="{$vo.id}">{$vo.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">名称</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="text" class="form-control" name="name" value="{$data.name}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">英文名称</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="text" class="form-control" name="en_name" value="{$data.en_name}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">图片</label>
+                            <div class="col-sm-12 col-md-7">
+                                <div id="image-preview" class="image-preview" style="background-image: url('{$data.path ? '__UPLOAD__/' . $data.path : ''}');background-size: cover;background-position: center center;">
+                                    <label for="image-upload" id="image-label">选择文件</label>
+                                    <input type="file" name="image" id="image-upload" />
+                                    <input type="hidden" name="path" value="{$data.path}" id="image-upload-path" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                <button type="button" class="btn btn-primary submit">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+
+{block name="extend-script"}
+<script type="text/javascript">
+    $('#image-upload').on('change', function(){
+        var that = $(this);
+        var file = that[0].files[0];
+        if (file) {
+            var data = new FormData();
+            data.append('media', file);
+            $.ajax({
+                url: "{:url('base/upload')}",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success(res) {
+                    if (res.success === true) $('#image-upload-path').val(res.data.path)
+                    if (res.success === false) swal('出现错误', res.err_msg, 'error');
+                }
+            })
+        }
+    });
+
+
+    $('.submit').click(function () {
+        $('.submit').attr('disabled', true);
+
+        $.ajax({
+            url: "{:url('product/store')}",
+            method: 'post',
+            data: $("#data-form").serialize(),
+            dataType: 'json',
+            success(res) {
+                $('.submit').attr('disabled', false);
+                if (res.success === true) {
+                    swal('操作成功', {buttons: false, icon: 'success'});
+                    setTimeout(function () { window.location = "{:url('product/index')}" }, 1500)
+                }
+                if (res.success === false) swal('出现错误', res.err_msg, 'error');
+            }
+        })
+    })
+</script>
+{/block}

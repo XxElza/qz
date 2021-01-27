@@ -1,0 +1,51 @@
+<div class="main">
+    <!-- 头部导航栏 -->
+    <div class="top_view">
+        <!-- 头部导航栏左边 -->
+        <div class="top_view_left">
+            <div class="pc_icon"></div>
+            <div class="pc_title">DOUBLE PHOENIX</div>
+        </div>
+        <!-- 头部导航栏右边 -->
+        <div class="top_view_left pc_right">
+            <div class="title top_btn homeBtn" style="color: rgb(34, 126, 36);">HOME</div>
+            <div class="title top_btn brandBtn">BRAND</div>
+            <div class="title top_btn newsBtn">NEWS</div>
+            <div class="title top_btn aboutBtn">ABOUT</div>
+            <input class="tooltip search_input search_input_width input_view" placeholder="search"/>
+            <div class="title language language_height zwBtn">中文</div>
+            <div class="language_line"></div>
+            <div class="title language language_height englishBtn">ENG</div>
+        </div>
+        <!-- 头部导航栏缩小后右边 -->
+        <div class="background home_right"></div>
+    </div>
+
+    <div class="min_list_bg">
+        <div class="min_list">
+            <div class="title min_list_item homeBtn" style="color: rgb(34, 126, 36);">HOME</div>
+            <div class="title min_list_item brandBtn">BRAND</div>
+            <div class="title min_list_item newsBtn">NEWS</div>
+            <div class="title min_list_item aboutBtn">ABOUT</div>
+            <div class="min_list_item min_input"><input class="tooltip search_input min_nav_search_input_width input_view" placeholder="search"/></div>
+            <div class="min_list_item min_eng" style="justify-content: center;display: flex;flex-direction: row;">
+                <div class="title language language_min_nav_height zwBtn">中文</div>
+                <div class="language_min_nav_line"></div>
+                <div class="title language language_min_nav_height englishBtn">ENG</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 内容 -->
+    <div class="content_view">
+        <!-- 头部view -->
+        <div class="header_view">
+            <div class="tooltip header_view_bgView header_view_left_image" style="background: url('__UPLOAD__/{$series.1.cover}') no-repeat center center / 100% auto;">
+                <div class="header_title header_left_title">{$series.1.en_name}</div>
+                <div class="tooltip header_button header_left_button mosaicBtn" data-id="{$series.1.id}">MORE</div>
+            </div>
+            <div class="tooltip header_view_bgView header_view_right_image " style="background: url('__UPLOAD__/{$series.0.cover}') no-repeat center center / 100% auto;">
+                <div class="header_title header_right_title">{$series.0.en_name}</div>
+                <div class="tooltip header_button header_right_button dragonBtn mosaicBtn" data-id="{$series.0.id}">MORE</div>
+            </div>
+        </div>

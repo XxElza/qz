@@ -1,0 +1,31 @@
+<!-- General JS Scripts -->
+<script src="__ADMIN__/js/jquery-3.3.1.min.js"></script>
+<script src="__ADMIN__/js/popper.min.js"></script>
+<script src="__ADMIN__/js/bootstrap.min.js"></script>
+<script src="__ADMIN__/js/jquery.nicescroll.min.js"></script>
+<script src="__ADMIN__/js/moment.min.js"></script>
+<script src="__ADMIN__/js/stisla.js"></script>
+
+<!-- JS Libraies -->
+<script src="__VENDOR__/chocolat/js/chocolat.js"></script>
+<script src="__VENDOR__/daterangepicker/js/daterangepicker.js"></script>
+<script src="__VENDOR__/jquery_upload_preview/js/jquery.uploadPreview.js"></script>
+<script src="__VENDOR__/sweetalert/js/sweetalert.min.js"></script>
+<script src="__VENDOR__/summernote/summernote-bs4.js"></script>
+<script src="__VENDOR__/summernote/lang/summernote-zh-CN.min.js"></script>
+
+
+<!-- Template JS File -->
+<script src="__ADMIN__/js/scripts.js"></script>
+<script src="__ADMIN__/js/custom.js"></script>
+
+<script type="text/javascript">
+$(function() {
+    var controller = '{:request()->controller()}';
+    $('.main-sidebar .sidebar-menu .' + controller.toLowerCase() + '-li').addClass('active');
+    $('.main-sidebar .sidebar-menu .' + controller.toLowerCase() + '-li .dropdown-menu').show();
+})
+</script>
+
+</body>
+</html>

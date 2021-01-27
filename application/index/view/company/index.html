@@ -1,0 +1,188 @@
+{extend name="public:template" /}
+
+{block name="content"}
+    <!-- INNER BANNER START -->
+    <div class="inner-banner-holder d-none d-lg-block">
+        <div class="image" style="background-image:url('__UPLOAD__/{$banner.path}');">
+            <div class="describe company-describe content-holder">
+                <div class="head">关于权重数据</div>
+                <div class="desc">{$banner.content|raw}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="inner-banner-holder d-lg-none d-md-block">
+        <div class="image">
+            <img src="__UPLOAD__/{$wap_banner.path}" alt="" class="img-fluid">
+        </div>
+    </div>
+    <!-- INNER BANNER END -->
+
+
+    <!-- Company Profile START -->
+    <div class="company-profile-holder content-holder d-none d-lg-block">
+        <div class="holder-head">
+            <div class="title">公司简介</div>
+            <div class="subtitle">Company Profile</div>
+        </div>
+        <div class="holder-body row no-gutters justify-content-center">
+            {volist name="profiles" id="vo"}
+            <div class="col-12 row no-gutters profile-holder">
+                <div class="image"><img src="__UPLOAD__/{$vo.path}" alt="{$vo.title}" class="img-fluid"></div>
+                <div class="describe">
+                    <div class="head">{$vo.title}</div>
+                    <div class="desc">{$vo.desc|raw}</div>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+
+    <div class="company-profile-holder content-holder d-lg-none d-md-block">
+        <div class="holder-head">
+            <div class="title">公司简介</div>
+            <div class="subtitle">Company Profile</div>
+        </div>
+        <div class="holder-body row no-gutters justify-content-center">
+            {volist name="profiles" id="vo"}
+            <div class="col-12 row no-gutters profile-holder" style="background-image: url('__UPLOAD__/{$vo.path}');">
+                <div class="describe">
+                    <div class="head">{$vo.title}</div>
+                    <div class="desc">{$vo.desc|raw}</div>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+    <!-- Company Profile END -->
+
+
+    <!-- Company Development START -->
+    <div class="company-dev-holder content-holder d-none d-lg-block">
+        <div class="holder-head">
+            <div class="title">发展历程</div>
+            <div class="subtitle">Development History</div>
+        </div>
+        <div class="holder-body row no-gutters">
+            <div class="space"></div>
+            <div class="col-12 row no-gutter dev-holder">
+                {volist name="histories" id="vo"}
+                <div class="dev-item">
+                    <div class="arrow"></div>
+                    <div class="describe">
+                        <div class="head">{$vo.title}</div>
+                        <div class="desc">{$vo.desc|raw}</div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+
+    <div class="company-dev-holder content-holder d-lg-none d-md-block">
+        <div class="holder-head">
+            <div class="title">发展历程</div>
+            <div class="subtitle">Development History</div>
+        </div>
+        <div class="holder-body row no-gutters">
+            <div class="space">
+                <img src="__STATIC__/img/progress-arrow-up-2.png" alt="" class="img-fluid">
+            </div>
+            <div class="col-12 row no-gutter dev-holder">
+                {volist name="histories" id="vo"}
+                <div class="dev-item">
+                    <div class="arrow">
+                        <img src="__STATIC__/img/progress-arrow-point.png" alt="" class="img-fluid">
+                    </div>
+                    <div class="describe">
+                        <div class="head">{$vo.title}</div>
+                        <div class="desc">{$vo.desc|raw}</div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    <!-- Company Development END -->
+
+
+    <!-- Company Honor START -->
+    <div class="company-honor-holder content-holder d-none d-lg-block">
+        <div class="holder-head">
+            <div class="title">资质荣誉</div>
+            <div class="subtitle">Honor and qualification</div>
+        </div>
+        <div class="holder-body row no-gutters">
+            {volist name="honors" id="vo"}
+            <div class="honor-item">
+                <div class="image"><img src="__UPLOAD__/{$vo.path}" alt="{$vo.title}" class="img-fluid"></div>
+                <div class="head">{$vo.title}</div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+
+    <div class="company-honor-holder content-holder d-lg-none d-md-block">
+        <div class="holder-head">
+            <div class="title">资质荣誉</div>
+            <div class="subtitle">Honor and qualification</div>
+        </div>
+        <div class="holder-body row no-gutters">
+            {volist name="honors" id="vo"}
+            <div class="col-4 honor-item mr-auto ml-auto">
+                <div class="image"><img src="__UPLOAD__/{$vo.path}" alt="{$vo.title}" class="img-fluid"></div>
+                <div class="head">{$vo.title}</div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+    <!-- Company Honor END -->
+
+
+    <!-- JOIN US START -->
+    <div class="career-holder content-holder d-none d-lg-block">
+        <div class="holder-head">
+            <div class="title">加入我们</div>
+            <div class="subtitle">Join us</div>
+        </div>
+        <div class="holder-body row no-gutters">
+            {volist name="careers" id="vo"}
+            <div class="col-12 career-item">
+                <div class="head">{$vo.title}</div>
+                <div class="desc">{$vo.desc|raw}</div>
+            </div>
+            {/volist}
+        </div>
+
+        <div class="col-12 text-center benefit-holder mr-auto ml-auto">
+            <p>五险一金</p>
+            <p>双休、国家规定的法定假日、年假、婚假、产假等</p>
+            <p>每年定期薪资调涨</p>
+            <p>广阔的晋升发展平台，舒适的办公环境</p>
+        </div>
+    </div>
+
+    <div class="career-holder content-holder d-lg-none d-md-block">
+        <div class="holder-head">
+            <div class="title">加入我们</div>
+            <div class="subtitle">Join us</div>
+        </div>
+        <div class="holder-body row no-gutters">
+            {volist name="careers" id="vo"}
+            <div class="col-12 career-item">
+                <div class="head">{$vo.title}</div>
+                <div class="desc">{$vo.desc|raw}</div>
+            </div>
+            {/volist}
+        </div>
+
+        <div class="col-12 text-center benefit-holder">
+            <p>五险一金</p>
+            <p>双休、国家规定的法定假日、年假、婚假、产假等</p>
+            <p>每年定期薪资调涨</p>
+            <p>广阔的晋升发展平台，舒适的办公环境</p>
+        </div>
+    </div>
+
+    <!-- JOIN US END -->
+{/block}

@@ -1,0 +1,256 @@
+{extend name="public:template" /}
+
+{block name="content"}
+<div class="section-header">
+    <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="{:url('Index/index')}">控制台</a></div>
+        <div class="breadcrumb-item"><a href="{:url('series/index')}">系列管理</a></div>
+        <div class="breadcrumb-item">{$title}</div>
+    </div>
+</div>
+
+<div class="section-body">
+    <h2 class="section-title">系列管理 - {$title}</h2>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                 <form id="data-form" autocomplete=off class="needs-validation" novalidate="">
+                     <input type="hidden" name="id" value="{$data.id}">
+                    <div class="card-body">
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">品牌</label>
+                            <div class="col-sm-12 col-md-7">
+                                <select class="form-control selectric" name="brand_id">
+                                    <option value="{$data.brand_id ?? 0}">{$data.brand_name ?? "请选择"}</option>
+                                    {volist name="brand" id="vo" key="key"}
+                                    <option value="{$vo.id}">{$vo.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">是否首页</label>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_home" id="inlineRadio1" value="1" {if $data.is_home == 1} checked {/if}>
+                                    <label class="form-check-label" for="inlineRadio1">是</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_home" id="inlineRadio2" value="0" {if !$data.is_home} checked {/if}>
+                                    <label class="form-check-label" for="inlineRadio2">否</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">名称</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="text" class="form-control" name="name" value="{$data.name}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">英文名称</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="text" class="form-control" name="en_name" value="{$data.en_name}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">介绍</label>
+                            <div class="col-sm-12 col-md-7">
+                                <textarea class="summernote-simple" name="desc">{$data.desc}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">英文介绍</label>
+                            <div class="col-sm-12 col-md-7">
+                                <textarea class="summernote-simple" name="en_desc">{$data.en_desc}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">logo</label>
+                            <div class="col-sm-12 col-md-7">
+                                <div id="image-preview" class="image-preview" style="background-image: url('{$data.logo ? '__UPLOAD__/' . $data.logo : ''}');background-size: cover;background-position: center center;">
+                                    <label for="image-upload" id="image-label">选择文件</label>
+                                    <input type="file" name="image" id="image-upload" />
+                                    <input type="hidden" name="logo" value="{$data.logo}" id="image-upload-path" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">封面</label>
+                            <div class="col-sm-12 col-md-7">
+                                <div id="image-preview-cover" class="image-preview" style="background-image: url('{$data.cover ? '__UPLOAD__/' . $data.cover : ''}');background-size: cover;background-position: center center;">
+                                    <label for="image-upload-cover" id="image-label-cover">选择文件</label>
+                                    <input type="file" name="image" id="image-upload-cover" />
+                                    <input type="hidden" name="cover" value="{$data.cover}" id="image-upload-path-cover" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">视频</label>
+                            <div class="col-sm-12 col-md-6">
+                                <label class="video-label custom-file-label" style="left: 15px;">{$data.video ?? '选择文件'}</label>
+                                <input type="file" class="custom-file-input" id="video-upload">
+                                <input type="hidden" name="video" value="{$data.video}" id="video-upload-path" />
+
+                                <small class="form-text text-muted mt-3">视频格式: mp4, m4v, avi</small>
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="button" href="#" class="btn btn-icon icon-left btn-light w-100" id="preview-video"><i class="fas fa-play-circle"></i> 预览</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                <button type="button" class="btn btn-primary submit">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+
+{block name="extend-script"}
+<script type="text/javascript">
+    $('#image-upload').on('change', function(){
+        var that = $(this);
+        var file = that[0].files[0];
+        if (file) {
+            var data = new FormData();
+            data.append('media', file);
+            $.ajax({
+                url: "{:url('base/upload')}",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success(res) {
+                    if (res.success === true) $('#image-upload-path').val(res.data.path)
+                    if (res.success === false) swal('出现错误', res.err_msg, 'error');
+                }
+            })
+        }
+    });
+
+    $('#image-upload-cover').on('change', function(){
+        var that = $(this);
+        var file = that[0].files[0];
+        if (file) {
+            var data = new FormData();
+            data.append('media', file);
+            $.ajax({
+                url: "{:url('base/upload')}",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success(res) {
+                    if (res.success === true) {
+                        $('#image-upload-path-cover').val(res.data.path);
+
+                        var path = "__UPLOAD__/"  + res.data.path
+                        $('#image-preview-cover').css("background-image", "url("+path+")");
+                        $('#image-preview-cover').css("background-size", "cover");
+                        $('#image-preview-cover').css("background-position", "center center");
+                    }
+                    if (res.success === false) swal('出现错误', res.err_msg, 'error');
+                }
+            })
+        }
+    });
+
+    $('#video-upload').on('change', function(){
+        var that = $(this);
+        var file = that[0].files[0];
+        if (file) {
+            var acccept_arr = new Array('mp4', 'avi', 'm4v');
+            var fileName = file.name.substring(file.name.lastIndexOf(".") + 1).toLowerCase();
+            if (acccept_arr.indexOf(fileName) == -1) {
+                swal('出现错误', '请上传后缀为 mp4, m4v, avi 的视频文件', 'error');
+                return ;
+            }
+
+            swal('文件上传中', {buttons: false});
+            var data = new FormData();
+            data.append('media', file);
+            $.ajax({
+                url: "{:url('base/upload')}",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success(res) {
+                    if (res.success === true) {
+                        swal('上传成功', {buttons: false, icon: 'success', timer: 1500});
+
+                        $('.video-label').text(res.data.path);
+                        $('#video-upload-path').val(res.data.path);
+                    }
+                    if (res.success === false) swal('出现错误', res.err_msg, 'error');
+                }
+            })
+        }
+    });
+    $('#preview-video').click(function () {
+        var video = $('#video-upload-path').val();
+        if (! video)
+            return ;
+
+        swal({
+            className: "col-5",
+            title: "视频预览",
+            content: {
+                element: "video",
+                attributes: {
+                    id: 'index-video',
+                    src: '__UPLOAD__/' + video,
+                    controls: true
+                },
+            },
+            buttons: '关闭',
+            closeModal: true,
+        }).then((data) => {
+            var videoEl = document.getElementById('index-video');
+            videoEl.pause();
+        });
+    })
+
+
+    $('.submit').click(function () {
+        $('.submit').attr('disabled', true);
+
+        $.ajax({
+            url: "{:url('series/store')}",
+            method: 'post',
+            data: $("#data-form").serialize(),
+            dataType: 'json',
+            success(res) {
+                $('.submit').attr('disabled', false);
+                if (res.success === true) {
+                    swal('操作成功', {buttons: false, icon: 'success'});
+                    setTimeout(function () { window.location = "{:url('series/index')}" }, 1500)
+                }
+                if (res.success === false) swal('出现错误', res.err_msg, 'error');
+            }
+        })
+    })
+</script>
+{/block}

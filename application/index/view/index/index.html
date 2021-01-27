@@ -1,0 +1,59 @@
+{extend name="public:template" /}
+
+{block name="content"}
+<div class="home_class">
+    <div class="home_top_view">BRAND</div>
+    <div class="header_view">
+        <!-- home_top_left_view -->
+        <div class="tooltip home_view_bg_View home_view_bg_left_image" style="background: url('__UPLOAD__/{$brand.0.cover}') no-repeat center center / 100% auto;">
+            <div class="header_title header_left_title">{$brand.0.en_name}</div>
+            <div class="tooltip header_button header_left_button" data-id="{$brand.0.id}">MORE</a></div>
+        </div>
+        <div class="tooltip home_view_bg_View  home_view_bg_right_image" style="background: url('__UPLOAD__/{$brand.1.cover}') no-repeat center center / 100% auto;">
+            <div class="header_title header_left_title">{$brand.1.en_name}</div>
+            <div class="tooltip header_button header_left_button" data-id="{$brand.1.id}">MORE</div>
+        </div>
+    </div>
+    <div class="header_view">
+        <!-- home_top_left_view -->
+        <div class="tooltip home_view_bg_bottom_View home_top_left_view_image_mr home_top_left_view_1_image" style="background: url('__UPLOAD__/{$brand.2.cover}') no-repeat center center / 100% auto;">
+            <div class="header_title header_left_title">{$brand.2.en_name}</div>
+            <div class="tooltip header_button header_left_button" data-id="{$brand.2.id}">MORE</div>
+        </div>
+        <div class="tooltip home_view_bg_bottom_View home_top_left_view_image_mr home_top_left_view_2_image" style="background: url('__UPLOAD__/{$brand.3.cover}') no-repeat center center / 100% auto;">
+            <div class="header_title header_left_title">{$brand.3.en_name}</div>
+            <div class="tooltip header_button header_left_button" data-id="{$brand.3.id}">MORE</div>
+        </div>
+        <div class="tooltip home_view_bg_bottom_View home_top_left_view_3_image" style="background: url('__UPLOAD__/{$brand.4.cover}') no-repeat center center / 100% auto;">
+            <div class="header_title header_left_title">{$brand.4.en_name}</div>
+            <div class="tooltip header_button header_left_button" data-id="{$brand.4.id}">MORE</div>
+        </div>
+    </div>
+    <!-- 消息列表 -->
+    <div class="list_bg_view">
+
+        {foreach $news as $v}
+        <div class="list_item">
+            <div class="list_item_left_bg">
+                <div class="list_item_left_bg_title">
+                    {$v.send_time}
+                </div>
+            </div>
+            <div class="list_item_right_bg">
+                <div class="title list_item_right_bg_title" data-id="{$v.id}">
+                    {$v.en_title}
+                </div>
+                <div class="list_item_right_bg_dec">
+                    {$v.en_content|strip_tags}
+                </div>
+            </div>
+        </div>
+        {/foreach}
+        <div class="list_bottom_button_bg">
+            <div class="background list_bottom_button_bg_btn">
+                MORE news
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

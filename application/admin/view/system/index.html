@@ -1,0 +1,125 @@
+{extend name="public:template" /}
+
+{block name="content"}
+<div class="section-header">
+    <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="{:url('Index/index')}">控制台</a></div>
+        <div class="breadcrumb-item">网站基本配置</div>
+    </div>
+</div>
+
+<div class="section-body">
+    <h2 class="section-title">网站基本配置</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form id="setting-form" autocomplete=off>
+                <div class="card" id="settings-card">
+                    <div class="card-body">
+                        {volist name="data" id="vo" key="key"}
+                        <div class="form-group row align-items-center">
+                            <label for="site-title" class="form-control-label col-sm-3 text-md-right">{$vo.key}</label>
+                            <div class="col-sm-6 col-md-9 row no-gutters">
+                                {switch $vo.is_upload}
+                                    {case 0}
+                                    <input type="text" name="system[{$vo.id}]" class="form-control" value="{$vo.val}">
+                                    {/case}
+                                    {case 1}
+                                    <div class="col-sm-6 col-md-10">
+                                        <div class="custom-file">
+                                            <input type="hidden" name="system[{$vo.id}]" value="{$vo.val}" class="image-path">
+                                            <input type="file" class="custom-file-input image-upload">
+                                            <label class="custom-file-label">{$vo.val ?? '选择文件'}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="ml-auto preview">
+                                        <button type="button" href="#" class="btn btn-icon icon-left btn-light w-100 preview-image"><i class="fas fa-play-circle"></i> 预览</button>
+                                    </div>
+                                    {/case}
+                                {/switch}
+                            </div>
+                        </div>
+                        {/volist}
+
+                        <div class="card-footer bg-whitesmoke text-md-right">
+                            <button class="btn btn-primary" id="save-btn">保存</button>
+                        </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="extend-script"}
+<script type="text/javascript">
+$('.image-upload').on('change', function(){
+    var that = $(this);
+    var file = that[0].files[0];
+    if (file) {
+        var data = new FormData();
+        data.append('media', file);
+        $.ajax({
+            url: "{:url('base/upload')}",
+            method: 'post',
+            processData: false,
+            contentType: false,
+            data: data,
+            dataType: 'json',
+            success(res) {
+                if (res.success === true) {
+                    that.parents('.form-group').find('.custom-file-label').text(res.data.path)
+                    that.parents('.form-group').find('.image-path').val(res.data.path)
+                }
+                if (res.success === false) swal('出现错误', res.err_msg, 'error');
+            }
+        })
+    }
+});
+$('.preview-image').click(function () {
+    var image = $(this).parents('.form-group').find('.image-path').val();
+    if (! image)
+        return ;
+
+    swal({
+        className: "bg-secondary",
+        content: {
+            element: "img",
+            attributes: {
+                className: "col-12",
+                src: '__UPLOAD__/' + image,
+            },
+        },
+        buttons: '关闭',
+        closeModal: true,
+    });
+})
+
+
+$("#setting-form").submit(function() {
+  let save_button = $(this).find('#save-btn'),
+    output_status = $("#output-status"),
+    card = $('#settings-card');
+
+  let card_progress = $.cardProgress(card, {
+    spinner: false
+  });
+  save_button.addClass('btn-progress');
+  output_status.html('');
+
+  $.ajax({
+      url: "{:url('System/store')}",
+      method: 'post',
+      data: $("#setting-form").serialize(),
+      dataType: 'json',
+      success(res) {
+          if (res.success === true) location.reload();
+          if (res.success === false) swal('出现错误', res.err_msg, 'error');
+      }
+  })
+
+  return false;
+});
+</script>
+{/block}

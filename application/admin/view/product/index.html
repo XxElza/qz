@@ -1,0 +1,110 @@
+{extend name="public:template" /}
+
+{block name="content"}
+<div class="section-header">
+    <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="{:url('Index/index')}">控制台</a></div>
+        <div class="breadcrumb-item">产品管理</div>
+    </div>
+</div>
+
+<div class="section-body">
+    <h2 class="section-title">产品管理</h2>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-form mr-auto">
+                        <form>
+                            <div class="input-group">
+                                <select class="form-control rounded-0" name="type">
+                                    <option value="" {:request()->type == $vo.id ? 'selected' : ''}>所有</option>
+                                    {volist name="series" id="vo"}
+                                    <option value="{$vo.id}" {:request()->type == $vo.id ? 'selected' : ''}>{$vo.name}</option>
+                                    {/volist}
+                                </select>
+                                <div class="input-group-append"><button class="btn btn-light rounded-0" type="submit">筛选</button></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-header-form ml-auto">
+                        <a href="{:url('product/detail')}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> 创建</a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-md">
+                            <tr>
+                                <th width="30">#</th>
+                                <th>标题</th>
+                                <th>图片</th>
+                                <th width="200">操作</th>
+                            </tr>
+                            {volist name="data" id="vo" key="key"}
+                            <tr>
+                                <td>{$key}</td>
+                                <td>{$vo.name}</td>
+                                <td>
+                                    {if $vo.path}
+                                    <div class="chocolat-parent">
+                                        <a class="chocolat-image" href="__UPLOAD__/{$vo.path}" title="{$vo.name}">
+                                            <img width="100" src="__UPLOAD__/{$vo.path}" />
+                                        </a>
+                                    </div>
+                                    {/if}
+                                </td>
+                                <td>
+                                    <a href="{:url('product/detail', ['id' => $vo.id])}" class="btn btn-icon icon-left btn-primary mr-3"><i class="far fa-edit"></i> 编辑</a>
+                                    <a href="javascript:;" class="btn btn-icon icon-left btn-danger" onclick="delImage('{$vo.id}')"><i class="fas fa-times"></i> 删除</a>
+                                </td>
+                            </tr>
+                            {/volist}
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                        {$data|raw}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+
+{block name="extend-script"}
+<script type="text/javascript">
+    function delImage(id) {
+        swal({
+            title: '确定删除该数据？',
+            icon: 'warning',
+            buttons: ['取消', '确认'],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (! willDelete)
+                    return;
+
+                $.ajax({
+                    url: "{:url('product/destroy')}",
+                    method: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    success(res) {
+                        if (res.success === true) {
+                            swal('操作成功', {buttons: false, icon: 'success'});
+                            setTimeout(function () { location.reload() }, 1500)
+                        }
+                        if (res.success === false) swal('出现错误', res.err_msg, 'error');
+                    }
+                })
+            });
+    }
+</script>
+{/block}

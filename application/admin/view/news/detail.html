@@ -1,0 +1,119 @@
+{extend name="public:template" /}
+
+{block name="content"}
+<div class="section-header">
+    <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="{:url('Index/index')}">控制台</a></div>
+        <div class="breadcrumb-item"><a href="{:url('News/index')}">新闻资讯管理</a></div>
+        <div class="breadcrumb-item">{$title}</div>
+    </div>
+</div>
+
+<div class="section-body">
+    <h2 class="section-title">新闻资讯管理 - {$title}</h2>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                 <form id="data-form" autocomplete=off class="needs-validation" novalidate="">
+                     <input type="hidden" name="id" value="{$data.id}">
+                    <div class="card-body">
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">标题</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="text" class="form-control" name="title" required="" value="{$data.title}">
+                                <div class="invalid-feedback">请填写标题</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">英文标题</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="text" class="form-control" name="en_title" required="" value="{$data.en_title}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">内容</label>
+                            <div class="col-sm-12 col-md-7">
+                                <textarea class="summernote-simple" name="content">{$data.content}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">英文内容</label>
+                            <div class="col-sm-12 col-md-7">
+                                <textarea class="summernote-simple" name="en_content">{$data.en_content}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">发布时间</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="text" class="form-control datepicker" name="send_time" value="{$data.send_time}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                <button type="button" class="btn btn-primary submit">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+
+{block name="extend-script"}
+<script type="text/javascript">
+$('#image-upload').on('change', function(){
+    var that = $(this);
+    var file = that[0].files[0];
+    if (file) {
+        var data = new FormData();
+        data.append('media', file);
+        $.ajax({
+            url: "{:url('base/upload')}",
+            method: 'post',
+            processData: false,
+            contentType: false,
+            data: data,
+            dataType: 'json',
+            success(res) {
+                if (res.success === true) $('#image-upload-path').val(res.data.path)
+                if (res.success === false) swal('出现错误', res.err_msg, 'error');
+            }
+        })
+    }
+});
+
+
+$('.submit').click(function () {
+    $("#data-form").addClass('was-validated');
+    if ($("#data-form")[0].checkValidity() === false)
+      return ;
+
+    $('.submit').attr('disabled', true);
+
+    $.ajax({
+        url: "{:url('News/store')}",
+        method: 'post',
+        data: $("#data-form").serialize(),
+        dataType: 'json',
+        success(res) {
+            $('.submit').attr('disabled', false);
+            if (res.success === true) {
+                swal('操作成功', {buttons: false, icon: 'success'});
+                setTimeout(function () { window.location = "{:url('News/index')}" }, 1500)
+            }
+            if (res.success === false) swal('出现错误', res.err_msg, 'error');
+        }
+    })
+})
+</script>
+{/block}
